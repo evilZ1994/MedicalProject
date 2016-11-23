@@ -14,6 +14,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import com.example.bean.Patient;
+import com.example.mapper.PatientMapper;
+import com.example.utils.SqlSessionFactoryUtil;
 
 
 /**
@@ -40,15 +42,21 @@ public class testServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response){
 		
-		Reader reader = Resources.getResourceAsReader("Configuration.xml");
+		/*Reader reader = Resources.getResourceAsReader("Configuration.xml");
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 		SqlSession session = sqlSessionFactory.openSession();
 		Patient patient = session.selectOne("com.example.mapper.PatientMapper.selectPatientById", 1);
 		System.out.println("name:"+patient.getUsername());
 		
-		System.out.println("test success!");
+		System.out.println("test success!");*/
+		
+		SqlSessionFactory factory = new SqlSessionFactoryUtil().getSqlSessionFactory();
+		SqlSession session = factory.openSession();
+		PatientMapper patientMapper = session.getMapper(PatientMapper.class);
+		Patient patient = patientMapper.selectPatientById(1);
+		System.out.println(patient.getUsername()+":"+patient.getPassword());
 	}
 
 }

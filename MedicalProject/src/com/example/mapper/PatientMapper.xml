@@ -6,4 +6,8 @@
     <select id="selectPatientById" parameterType="int" resultType="Patient">
         select * from patient where id = #{id}
     </select>
+    
+    <insert id="register" parameterType="Patient">
+    	insert into patient(name, username, password, create_time, update_time) values (#{name}, #{username}, #{password}, #{create_time}, #{update_time})
+    </insert>
 </mapper>
