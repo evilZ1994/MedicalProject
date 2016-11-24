@@ -52,10 +52,12 @@ public class testServlet extends HttpServlet {
 		
 		System.out.println("test success!");*/
 		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
 		SqlSessionFactory factory = new SqlSessionFactoryUtil().getSqlSessionFactory();
 		SqlSession session = factory.openSession();
 		PatientMapper patientMapper = session.getMapper(PatientMapper.class);
-		Patient patient = patientMapper.selectPatientById(1);
+		Patient patient = patientMapper.selectPatientById(id);
 		System.out.println(patient.getUsername()+":"+patient.getPassword());
 	}
 

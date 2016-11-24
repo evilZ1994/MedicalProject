@@ -6,6 +6,6 @@ public interface PatientMapper {
 	
 	Patient selectPatientById(int id);
 	
-	Void register(Patient patient);
+	void register(Patient patient);
 
 }

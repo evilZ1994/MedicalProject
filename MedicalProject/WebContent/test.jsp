@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="testServlet">
+	<form action="testServlet" method="get">
+		<input type="text" name="id"/>
 		<input type="submit" value="submit" />
 	</form>
 </body>

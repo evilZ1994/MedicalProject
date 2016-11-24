@@ -7,7 +7,7 @@
         select * from patient where id = #{id}
     </select>
     
-    <insert id="register" parameterType="Patient">
+    <insert id="register" parameterType="Patient" useGeneratedKeys="true" keyProperty="id">
     	insert into patient(name, username, password, create_time, update_time) values (#{name}, #{username}, #{password}, #{create_time}, #{update_time})
     </insert>
 </mapper>
