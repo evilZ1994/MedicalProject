@@ -5,14 +5,18 @@
 
 <configuration>
 
-	<typeAliases>
+	<!-- 
+		整合Spring之后，这些内容就不需要了
+	 -->
+
+	<!-- <typeAliases>
 		<typeAlias alias="Patient" type="com.example.bean.Patient" />
 		<typeAlias alias="Doctor" type="com.example.bean.Doctor" />
 		<typeAlias alias="Data" type="com.example.bean.Data" />
 		<typeAlias alias="Feedback" type="com.example.bean.Feedback" />
 	</typeAliases>
 
-	<!-- 对事务的管理和连接池的配置 -->
+	对事务的管理和连接池的配置
 	<environments default="development">		
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -26,11 +30,12 @@
 		</environment>
 	</environments>
 
-	<!-- mapping 文件路径配置 -->
+	mapping 文件路径配置
 	<mappers>
 		<mapper resource="com/example/mapper/PatientMapper.xml" />
 		<mapper resource="com/example/mapper/DoctorMapper.xml" />
 		<mapper resource="com/example/mapper/DataMapper.xml" />
 		<mapper resource="com/example/mapper/FeedbackMapper.xml" />
-	</mappers>
+	</mappers> -->
+	
 </configuration>

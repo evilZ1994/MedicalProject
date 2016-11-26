@@ -7,7 +7,7 @@ public class Patient {
 	private String username;
 	private String name;
 	private String password;
-	private int doc_id;
+	private Doctor doctor;
 	private Date create_time;
 	private Date update_time;
 	
@@ -35,11 +35,11 @@ public class Patient {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getDoc_id() {
-		return doc_id;
+	public Doctor getDoctor() {
+		return doctor;
 	}
-	public void setDoc_id(int doc_id) {
-		this.doc_id = doc_id;
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
 	}
 	public Date getCreate_time() {
 		return create_time;

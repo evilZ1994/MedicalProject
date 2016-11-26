@@ -3,15 +3,22 @@ package com.example.bean;
 import java.util.Date;
 
 public class Data {
+	private int id;
 	private int pressure;
 	private double angle;
 	private double temperature;
 	private double pulse;
-	private int patient_id;
+	private Patient patient;
 	private Date create_time;
 	private Date update_time;
 	private int has_read;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getPressure() {
 		return pressure;
 	}
@@ -36,11 +43,11 @@ public class Data {
 	public void setPulse(double pulse) {
 		this.pulse = pulse;
 	}
-	public int getPatient_id() {
-		return patient_id;
+	public Patient getPatient() {
+		return patient;
 	}
-	public void setPatient_id(int patient_id) {
-		this.patient_id = patient_id;
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 	public Date getCreate_time() {
 		return create_time;
