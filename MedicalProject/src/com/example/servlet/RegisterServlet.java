@@ -53,28 +53,21 @@ public class RegisterServlet extends HttpServlet {
 		
 		String infoStr = buffer.toString();
 		System.out.println("info:"+infoStr);
-	
+		PrintWriter writer = response.getWriter();
+		//返回结果
+		JSONObject resultJson = new JSONObject();
 		try {
 			if (infoStr!=null) {
 				JSONObject info = new JSONObject(infoStr);
 				String type = info.getString("type");
+				//判断是医生还是患者注册
 				if (type.equals("patient")) {
-					JSONObject content = info.getJSONObject("content");
-					String username = content.getString("username");
-					String name = content.getString("name");
-					String password = content.getString("password");
-					Date create_time = new Date();
-					Date update_time = new Date();
-					Patient patient = new Patient();
-					patient.setUsername(username);
-					patient.setName(name);
-					patient.setPassword(password);
-					patient.setCreate_time(create_time);
-					patient.setUpdate_time(update_time);
+					resultJson = patientService.patientRegister(info.getJSONObject("content"));
+					writer.write(resultJson.toString());
+				} else if (type.equals("doctor")) {
 					
-					boolean registerSuccess = patientService.patientRegister(patient);
-					PrintWriter writer = response.getWriter();
-					writer.write(registerSuccess ? "Ok" : "Fail");
+					
+					
 				}
 			}
 		} catch (JSONException e) {

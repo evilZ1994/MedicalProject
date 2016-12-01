@@ -3,8 +3,13 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.mapper.PatientMapper">
+
     <select id="selectPatientById" parameterType="int" resultType="Patient">
         select * from patient where id = #{id}
+    </select>
+    
+    <select id="selectPatientByUsername" parameterType="String" resultType="Patient">
+    	select * from patient where username=#{username}
     </select>
     
     <insert id="addPatient" parameterType="Patient" useGeneratedKeys="true" keyProperty="id">
