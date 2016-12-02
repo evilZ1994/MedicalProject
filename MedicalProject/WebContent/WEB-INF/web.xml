@@ -26,4 +26,14 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UtilGetServlet</display-name>
+    <servlet-name>UtilGetServlet</servlet-name>
+    <servlet-class>com.example.servlet.UtilGetServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UtilGetServlet</servlet-name>
+    <url-pattern>/UtilGetServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
