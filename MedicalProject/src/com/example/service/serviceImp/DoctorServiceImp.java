@@ -7,45 +7,46 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.bean.Patient;
-import com.example.mapper.PatientMapper;
-import com.example.service.PatientService;
-
-import net.sf.json.JsonConfig;
+import com.example.bean.Doctor;
+import com.example.mapper.DoctorMapper;
+import com.example.service.DoctorService;
 
 @Service
-public class PatientServiceImp implements PatientService {
-
+public class DoctorServiceImp implements DoctorService {
+	
 	@Autowired
-	private PatientMapper patientMapper;
+	private DoctorMapper doctorMapper;
 
 	@Override
-	public Patient getPatientByUsername(String username) {
-		Patient patient = patientMapper.selectPatientByUsername(username);
-		return patient;
+	public Doctor getDoctorByUsername(String username) {
+		Doctor doctor = doctorMapper.selectDoctorByUsername(username);
+		return doctor;
 	}
 
-	public JSONObject patientRegister(JSONObject content) throws JSONException {
+	@Override
+	public JSONObject doctorRegister(JSONObject content) throws JSONException {
 		JSONObject resultJson = new JSONObject();
 		String username = content.getString("username");
-		Patient checkPat = getPatientByUsername(username);
-		if (checkPat==null) {
+		Doctor checkDoc = getDoctorByUsername(username);
+		if (checkDoc==null) {
 			String name = content.getString("name");
 			String password = content.getString("password");
+			String hospital = content.getString("hospital");
 			Date create_time = new Date();
 			Date update_time = new Date();
-			Patient patient = new Patient();
-			patient.setUsername(username);
-			patient.setName(name);
-			patient.setPassword(password);
-			patient.setCreate_time(create_time);
-			patient.setUpdate_time(update_time);
+			Doctor doctor = new Doctor();
+			doctor.setUsername(username);
+			doctor.setName(name);
+			doctor.setPassword(password);
+			doctor.setHospital(hospital);
+			doctor.setCreate_time(create_time);
+			doctor.setUpdate_time(update_time);
 			
-			patientMapper.addPatient(patient);
+			doctorMapper.addDoctor(doctor);
 			//检查注册是否成功
-			Patient patient2 = getPatientByUsername(patient.getUsername());
+			Doctor doctor2 = getDoctorByUsername(doctor.getUsername());
 			
-			boolean registerSuccess = (patient2!=null);
+			boolean registerSuccess = (doctor2!=null);
 			if (registerSuccess) {
 				resultJson.put("Success", "注册成功！");
 			} else {
@@ -59,19 +60,19 @@ public class PatientServiceImp implements PatientService {
 	}
 
 	@Override
-	public Patient getByUsernameAndPass(String username, String password) {
-		Patient patient = patientMapper.selectByUsernameAndPass(new Patient(username, password));
-		return patient;
+	public Doctor getByUsernameAndPass(String username, String password) {
+		Doctor doctor = doctorMapper.selectByUsernameAndPass(new Doctor(username, password));
+		return doctor;
 	}
 
 	@Override
-	public JSONObject patientLogin(JSONObject content) {
+	public JSONObject doctorLogin(JSONObject content) {
 		try {
 			String username = content.getString("username");
 			String password = content.getString("password");
-			Patient patient = getByUsernameAndPass(username, password);
-			if (patient != null) {
-				JSONObject jsonObject = new JSONObject(patient);
+			Doctor doctor = getByUsernameAndPass(username, password);
+			if (doctor != null) {
+				JSONObject jsonObject = new JSONObject(doctor);
 				JSONObject result = new JSONObject();
 				result.put("status", "Success");
 				result.put("content", jsonObject);

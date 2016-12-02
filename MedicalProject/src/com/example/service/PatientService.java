@@ -13,10 +13,18 @@ public interface PatientService {
 	public Patient getPatientByUsername(String username);
 	
 	/**
+	 * 通过用户名和密码查找用户
+	 */
+	public Patient getByUsernameAndPass(String username, String password);
+	
+	/**
 	 * 患者注册
-	 * @param patient
-	 * @return
 	 * @throws JSONException 
 	 */
 	public JSONObject patientRegister(JSONObject content) throws JSONException;
+	
+	/**
+	 * 患者登录
+	 */
+	public JSONObject patientLogin(JSONObject content);
 }

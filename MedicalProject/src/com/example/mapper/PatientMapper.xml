@@ -4,15 +4,28 @@
 
 <mapper namespace="com.example.mapper.PatientMapper">
 
-    <select id="selectPatientById" parameterType="int" resultType="Patient">
+    <select id="selectPatientById" parameterType="int" resultMap="patientResult">
         select * from patient where id = #{id}
     </select>
     
-    <select id="selectPatientByUsername" parameterType="String" resultType="Patient">
+    <select id="selectPatientByUsername" parameterType="String" resultMap="patientResult">
     	select * from patient where username=#{username}
+    </select>
+    
+    <select id="selectByUsernameAndPass" parameterType="Patient" resultMap="patientResult">
+    	select * from patient where username=#{username} and password=#{password}
     </select>
     
     <insert id="addPatient" parameterType="Patient" useGeneratedKeys="true" keyProperty="id">
     	insert into patient(name, username, password, create_time, update_time) values (#{name}, #{username}, #{password}, #{create_time}, #{update_time})
     </insert>
+    
+    
+    
+    <resultMap type="Patient" id="patientResult">
+    	<association property="doctor" column="doctor_id" javaType="Doctor" select="getDoctorById"/>
+    </resultMap>
+    <select id="getDoctorById" parameterType="int" resultType="Doctor">
+    	select * from doctor where id=#{id}
+    </select>
 </mapper>

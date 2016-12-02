@@ -3,5 +3,21 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.mapper.DoctorMapper">
+
+	<select id="selectDoctorById" parameterType="int" resultType="Doctor">
+		select * from doctor where id=#{id}
+	</select>
+	
+	<select id="selectDoctorByUsername" parameterType="String" resultType="Doctor">
+		select * from doctor where username=#{username}
+	</select>
+	
+	<select id="selectByUsernameAndPass" parameterType="Doctor" resultType="Doctor">
+		select * from doctor where username=#{username} and password=#{password}
+	</select>
+	
+	<insert id="addDoctor" parameterType="Doctor">
+		insert into doctor(name, username, password, hospital, create_time, update_time) values (#{name}, #{username}, #{password}, #{hospital}, #{create_time}, #{update_time})
+	</insert>
     
 </mapper>

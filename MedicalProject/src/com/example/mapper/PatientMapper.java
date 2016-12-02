@@ -8,6 +8,8 @@ public interface PatientMapper {
 	
 	Patient selectPatientByUsername(String username);
 	
+	Patient selectByUsernameAndPass(Patient patient);
+	
 	void addPatient(Patient patient);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.example.bean.Doctor;
 import com.example.bean.Patient;
 import com.example.mapper.PatientMapper;
 
@@ -19,7 +20,7 @@ public class test {
 	@Autowired
 	private PatientMapper patientMapper;
 	
-	@Test
+	/*@Test
 	public void addPatient(){
 		Patient patient = new Patient();
 		patient.setName("Hilbert");
@@ -29,5 +30,11 @@ public class test {
 		patient.setUpdate_time(new Date());
 		
 		patientMapper.addPatient(patient);
+	}*/
+	@Test
+	public void getPatient(){
+		Patient patient = patientMapper.selectPatientById(1);
+		Doctor doctor = patient.getDoctor();
+		System.out.println(doctor.toString());
 	}
 }
