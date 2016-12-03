@@ -37,8 +37,6 @@ public class UtilGetServiceImp implements UtilGetService {
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
-		} finally {
-			writer.close();
 		}
 	}
 
@@ -55,10 +53,39 @@ public class UtilGetServiceImp implements UtilGetService {
 				result.put("result", 0);
 				writer.write(result.toString());
 			}
+			System.out.println("result: "+result.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();
-		} finally {
-			writer.close();
+		}
+	}
+
+	@Override
+	public void addDoctor(JSONObject params, JSONObject result, PatientService patientService, PrintWriter writer) {
+		try {
+			int patientId = params.getInt("patientId");
+			int doctorId = params.getInt("doctorId");
+			Patient patient = patientMapper.selectPatientById(patientId);
+			if (patient.getDoctor()!=null) {
+				result.put("result", -1);
+				result.put("Error", "已添加医生！请勿重复添加！");
+				writer.write(result.toString());
+			} else {
+				boolean isSuccess = patientService.addDoctor(doctorId, patientId);
+				if (isSuccess) {
+					result.put("result", 1);
+					Doctor doctor = patientMapper.selectPatientById(patientId).getDoctor();
+					JSONObject content = new JSONObject(doctor);
+					result.put("content", content);
+					writer.write(result.toString());
+				} else {
+					result.put("result", 0);
+					result.put("Error", "添加失败！请检查网络或稍后再试！");
+					writer.write(result.toString());
+				}
+			}
+			System.out.println("result: "+result.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
 }

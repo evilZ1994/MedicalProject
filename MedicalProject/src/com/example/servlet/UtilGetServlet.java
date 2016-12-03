@@ -50,6 +50,7 @@ public class UtilGetServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter writer = response.getWriter();
 		String operation = new String(request.getParameter("operation").getBytes("iso-8859-1"),"utf-8");
+		System.out.println("operation: "+operation);
 		JSONObject params;
 		try {
 			params = new JSONObject(new String(request.getParameter("params").getBytes("iso-8859-1"), "utf-8"));
@@ -62,7 +63,10 @@ public class UtilGetServlet extends HttpServlet {
 				break;
 			case "searchDoctor":
 				utilGetService.searchDoctor(params, result, doctorService, writer);
-				
+				System.out.println("UtilGetServlet done.");
+				break;
+			case "addDoctor":
+				utilGetService.addDoctor(params, result, patientService, writer);
 			default:
 				break;
 			}

@@ -12,4 +12,6 @@ public interface PatientMapper {
 	
 	void addPatient(Patient patient);
 
+	void addDoctor(int doctor_id, int patient_id);
+
 }

@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.bean.Doctor;
 import com.example.bean.Patient;
 import com.example.mapper.PatientMapper;
 import com.example.service.PatientService;
@@ -87,6 +88,17 @@ public class PatientServiceImp implements PatientService {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public boolean addDoctor(int doctorId, int patientId) {
+		patientMapper.addDoctor(doctorId, patientId);
+		Patient patient = patientMapper.selectPatientById(patientId);
+		Doctor doctor = patient.getDoctor();
+		if (doctor!=null) {
+			return true;
+		}
+		return false;
 	}
 
 }

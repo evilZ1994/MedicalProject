@@ -20,7 +20,9 @@
     	insert into patient(name, username, password, create_time, update_time) values (#{name}, #{username}, #{password}, #{create_time}, #{update_time})
     </insert>
     
-    
+    <update id="addDoctor" parameterType="int">
+    	update patient set doctor_id=#{arg0} where id=#{arg1}
+    </update>
     
     <resultMap type="Patient" id="patientResult">
     	<association property="doctor" column="doctor_id" javaType="Doctor" select="getDoctorById"/>
