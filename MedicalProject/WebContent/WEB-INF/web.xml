@@ -7,7 +7,7 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <display-name>MedicalProject</display-name>
+  <display-name>MedicalProjectServer</display-name>
   <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>com.example.servlet.RegisterServlet</servlet-class>
