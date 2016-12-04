@@ -7,7 +7,7 @@ public class Data {
 	private int pressure;
 	private double angle;
 	private double temperature;
-	private double pulse;
+	private int pulse;
 	private Patient patient;
 	private Date create_time;
 	private int has_read;
@@ -36,10 +36,10 @@ public class Data {
 	public void setTemperature(double temperature) {
 		this.temperature = temperature;
 	}
-	public double getPulse() {
+	public int getPulse() {
 		return pulse;
 	}
-	public void setPulse(double pulse) {
+	public void setPulse(int pulse) {
 		this.pulse = pulse;
 	}
 	public Patient getPatient() {
