@@ -1,15 +1,21 @@
 package com.example.service.serviceImp;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.bean.Doctor;
+import com.example.bean.Feedback;
 import com.example.bean.Patient;
 import com.example.mapper.DoctorMapper;
+import com.example.mapper.FeedbackMapper;
 import com.example.mapper.PatientMapper;
 import com.example.service.DoctorService;
 import com.example.service.PatientService;
@@ -21,7 +27,7 @@ public class UtilGetServiceImp implements UtilGetService {
 	@Autowired
 	private PatientMapper patientMapper;
 	@Autowired
-	private DoctorMapper doctorMapper;
+	private FeedbackMapper feedbackMapper;
 	
 	@Override
 	public void hasAddDoctor(JSONObject params, JSONObject result, PatientService patientService, PrintWriter writer) {
@@ -85,6 +91,51 @@ public class UtilGetServiceImp implements UtilGetService {
 			}
 			System.out.println("result: "+result.toString());
 		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void getFeedback(JSONObject params, JSONObject result, PrintWriter writer) {
+		List<Feedback> list = new ArrayList<>();
+		JSONArray jsonArray = new JSONArray();
+		try {
+			list = feedbackMapper.selectFeedbackByPatDocId(params.getInt("patient_id"), params.getInt("doctor_id"));
+			if (list!=null) {
+				Iterator<Feedback> iterator = list.iterator();
+				while (iterator.hasNext()) {
+					Feedback feedback = iterator.next();
+					JSONObject jsonObject = new JSONObject(feedback);
+					jsonArray.put(jsonObject);
+				}
+				result.put("result", "Success");
+				result.put("content", jsonArray);
+				writer.write(result.toString());
+			} else {
+				result.put("result", "Fail");
+				writer.write(result.toString());
+			}
+			System.out.println("getFeedback result:"+result.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateFeedback(JSONObject params) {
+		List<Integer> list = new ArrayList<>();
+		try {
+			JSONArray jsonArray = params.getJSONArray("params");
+			for(int index=0; index<jsonArray.length(); index++){
+				JSONObject jsonObject = jsonArray.getJSONObject(index);
+				list.add(jsonObject.getInt("id"));
+			}
+			System.out.println("List:"+list.toString());
+			if (list!=null&&!list.isEmpty()) {
+				feedbackMapper.updateBatch(list);				
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

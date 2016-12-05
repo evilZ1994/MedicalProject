@@ -4,4 +4,31 @@
 
 <mapper namespace="com.example.mapper.FeedbackMapper">
     
+    <select id="selectFeedbackByPatDocId" parameterType="int" resultMap="FeedbackResult">
+    	select * from feedback where patient_id=#{arg0} and doctor_id=#{arg1} and has_read=0
+    </select>
+    
+	<update id="updateBatch" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=";">
+			update feedback
+			<set>
+				has_read=1
+			</set>
+			where id=#{item}
+		</foreach>
+	</update>
+
+    <resultMap type="Feedback" id="FeedbackResult">
+    	<association property="patient" column="patient_id" javaType="Patient" select="getPatientById"/>
+    	<association property="doctor" column="doctor_id" javaType="Doctor" select="getDoctorById"/>
+    </resultMap>
+    <resultMap type="Patient" id="patientResult">
+    	<association property="doctor" column="doctor_id" javaType="Doctor" select="getDoctorById"/>
+    </resultMap>
+    <select id="getPatientById" parameterType="int" resultMap="patientResult">
+    	select * from Patient where id=#{id}
+    </select>
+    <select id="getDoctorById" parameterType="int" resultType="Doctor">
+    	select * from doctor where id=#{id}
+    </select>
 </mapper>

@@ -1,10 +1,11 @@
-package com.example.service;
+package com.example.service.serviceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.bean.Data;
 import com.example.mapper.DataMapper;
+import com.example.service.DataService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,7 @@ public class DataServiceImp implements DataService {
 		System.out.println("Date:"+new Date()+"\nJsonArray:"+jsonArray.toString());
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		List<Data> dataList = new ArrayList<>();
-		if (jsonArray!=null) {
+		if (jsonArray!=null&&jsonArray.length()>0) {
 			for(int index=0; index<jsonArray.length(); index++){
 				try {
 					Data data = new Data();
