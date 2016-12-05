@@ -36,4 +36,14 @@
     <servlet-name>UtilGetServlet</servlet-name>
     <url-pattern>/UtilGetServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DataUploadServlet</display-name>
+    <servlet-name>DataUploadServlet</servlet-name>
+    <servlet-class>com.example.servlet.DataUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DataUploadServlet</servlet-name>
+    <url-pattern>/DataUploadServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -3,5 +3,20 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.mapper.DataMapper">
+
+	<insert id="insertData" parameterType="Data">
+		insert into data(pressure, angle, temperature, pulse, patient_id, create_time, has_read) values (#{pressure},#{angle},#{temperature},#{pulse},#{patient_id},#{create_time},#{has_read})
+	</insert>
+	
+	<insert id="insertBatchData" parameterType="java.util.List">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+			SELECT  
+        	LAST_INSERT_ID()
+		</selectKey>
+		insert into data(pressure, angle, temperature, pulse, patient_id, create_time, has_read) values 
+		<foreach collection="list" item="data" index="index" separator=",">
+			(#{data.pressure},#{data.angle},#{data.temperature},#{data.pulse},#{data.patient_id},#{data.create_time},#{data.has_read})
+		</foreach>
+	</insert>
     
 </mapper>

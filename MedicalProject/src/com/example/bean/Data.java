@@ -9,6 +9,7 @@ public class Data {
 	private double temperature;
 	private int pulse;
 	private Patient patient;
+	private int patient_id;
 	private Date create_time;
 	private int has_read;
 	
@@ -60,5 +61,11 @@ public class Data {
 	}
 	public void setHas_read(int has_read) {
 		this.has_read = has_read;
+	}
+	public int getPatient_id() {
+		return patient_id;
+	}
+	public void setPatient_id(int patient_id) {
+		this.patient_id = patient_id;
 	}
 }
