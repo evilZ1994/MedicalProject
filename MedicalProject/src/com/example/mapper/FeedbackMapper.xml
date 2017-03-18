@@ -9,14 +9,22 @@
     </select>
     
 	<update id="updateBatch" parameterType="java.util.List">
-		<foreach collection="list" item="item" index="index" separator=";">
+		<!-- <foreach collection="list" item="item" index="index" separator=";">
 			update feedback
 			<set>
 				has_read=1
 			</set>
 			where id=#{item}
+		</foreach> -->
+		update feedback set has_read=1 where id in
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
 		</foreach>
 	</update>
+	
+	<insert id="addFeedback" parameterType="Feedback">
+		insert into feedback(content, patient_id, doctor_id, create_time, has_read) values (#{content}, #{patient.id}, #{doctor.id}, #{create_time}, 0);
+	</insert>
 
     <resultMap type="Feedback" id="FeedbackResult">
     	<association property="patient" column="patient_id" javaType="Patient" select="getPatientById"/>
@@ -31,4 +39,5 @@
     <select id="getDoctorById" parameterType="int" resultType="Doctor">
     	select * from doctor where id=#{id}
     </select>
+    
 </mapper>

@@ -38,12 +38,22 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>DataUploadServlet</display-name>
-    <servlet-name>DataUploadServlet</servlet-name>
-    <servlet-class>com.example.servlet.DataUploadServlet</servlet-class>
+    <display-name>DataServlet</display-name>
+    <servlet-name>DataServlet</servlet-name>
+    <servlet-class>com.example.servlet.DataServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>DataUploadServlet</servlet-name>
-    <url-pattern>/DataUploadServlet</url-pattern>
+    <servlet-name>DataServlet</servlet-name>
+    <url-pattern>/DataServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FeedbackSendServlet</display-name>
+    <servlet-name>FeedbackSendServlet</servlet-name>
+    <servlet-class>com.example.servlet.FeedbackSendServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FeedbackSendServlet</servlet-name>
+    <url-pattern>/FeedbackSendServlet</url-pattern>
   </servlet-mapping>
 </web-app>

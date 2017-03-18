@@ -55,7 +55,6 @@ public class UtilGetServlet extends HttpServlet {
 		try {
 			params = new JSONObject(new String(request.getParameter("params").getBytes("iso-8859-1"), "utf-8"));
 			JSONObject result = new JSONObject();
-			
 			switch (operation) {
 			case "hasAddDoctor":
 				utilGetService.hasAddDoctor(params, result, patientService, writer);
@@ -67,12 +66,17 @@ public class UtilGetServlet extends HttpServlet {
 				break;
 			case "addDoctor":
 				utilGetService.addDoctor(params, result, patientService, writer);
+				break;
 			case "getFeedback":
 				utilGetService.getFeedback(params, result, writer);
 				break;
 			case "updateFeedback":
 				utilGetService.updateFeedback(params);
 				break;
+			case "getPatientList":
+				utilGetService.getPatientList(params, writer);
+				break;
+	
 			default:
 				break;
 			}

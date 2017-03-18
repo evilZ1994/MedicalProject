@@ -18,5 +18,16 @@
 			(#{data.pressure},#{data.angle},#{data.temperature},#{data.pulse},#{data.patient_id},#{data.create_time},#{data.has_read})
 		</foreach>
 	</insert>
+	
+	<select id="getDataList" parameterType="int" resultType="Data">
+		select * from data where patient_id=#{patient_id} and has_read=0
+	</select>
+	
+	<update id="updateDataSetRead" parameterType="java.util.List">
+		update data set has_read=1 where id in
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</update>
     
 </mapper>

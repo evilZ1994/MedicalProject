@@ -9,4 +9,6 @@ public interface FeedbackMapper {
 	List<Feedback> selectFeedbackByPatDocId(int patient_id, int doctor_id);
 
 	void updateBatch(List<Integer> list);
+	
+	int addFeedback(Feedback feedback);
 }

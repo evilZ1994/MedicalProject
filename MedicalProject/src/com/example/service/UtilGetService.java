@@ -15,4 +15,7 @@ public interface UtilGetService {
 	void getFeedback(JSONObject params, JSONObject result, PrintWriter writer);
 
 	void updateFeedback(JSONObject params);
+
+	void getPatientList(JSONObject params, PrintWriter writer);
+
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 public class Patient {
 	private int id;
 	private String sex;
+	private int age;
 	private String username;
 	private String name;
 	private String password;
@@ -146,6 +147,14 @@ public class Patient {
 
 	public void setRecord_time(Date record_time) {
 		this.record_time = record_time;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	@Override

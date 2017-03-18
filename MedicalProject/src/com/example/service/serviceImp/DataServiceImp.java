@@ -2,15 +2,18 @@ package com.example.service.serviceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextListener;
 
 import com.example.bean.Data;
 import com.example.mapper.DataMapper;
 import com.example.service.DataService;
 
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -53,5 +56,46 @@ public class DataServiceImp implements DataService {
 			return isSuccess;
 		}
 		return false;
+	}
+	
+	@Override
+	public void getData(JSONObject params, JSONObject result, PrintWriter writer) {
+		try {
+			int patient_id = params.getInt("patient_id");
+			List<Data> dataList = dataMapper.getDataList(patient_id);
+			if (dataList!=null && !dataList.isEmpty()) {
+				result.put("result", "Success");
+				JSONArray jsonArray = new JSONArray();
+				Iterator<Data> iterator = dataList.iterator();
+				while(iterator.hasNext()){
+					JSONObject jsonObject = new JSONObject(iterator.next());
+					jsonArray.put(jsonObject);
+				}
+				result.put("content", jsonArray);
+				System.out.println("getData:"+result.toString());
+				writer.write(result.toString());
+			} else {
+				result.put("result", "Nothing");
+				writer.write(result.toString());
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateData(JSONObject params, JSONObject result, PrintWriter writer) {
+		try {
+			JSONArray jsonArray = params.getJSONArray("params");
+			List<Integer> ids = new ArrayList<>();
+			for (int i = 0; i < jsonArray.length(); i++) {
+				ids.add(jsonArray.getJSONObject(i).getInt("id"));
+			}
+			System.out.println("ids:"+ids.toString());
+			dataMapper.updateDataSetRead(ids);
+			writer.write("Done");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -2,8 +2,10 @@ package com.example.service.serviceImp;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,9 +13,11 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.bean.Data;
 import com.example.bean.Doctor;
 import com.example.bean.Feedback;
 import com.example.bean.Patient;
+import com.example.mapper.DataMapper;
 import com.example.mapper.DoctorMapper;
 import com.example.mapper.FeedbackMapper;
 import com.example.mapper.PatientMapper;
@@ -28,6 +32,8 @@ public class UtilGetServiceImp implements UtilGetService {
 	private PatientMapper patientMapper;
 	@Autowired
 	private FeedbackMapper feedbackMapper;
+	@Autowired
+	private DataMapper dataMapper;
 	
 	@Override
 	public void hasAddDoctor(JSONObject params, JSONObject result, PatientService patientService, PrintWriter writer) {
@@ -139,4 +145,57 @@ public class UtilGetServiceImp implements UtilGetService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void getPatientList(JSONObject params, PrintWriter writer) {
+		try {
+			int doctor_id = params.getInt("doctor_id");
+			JSONArray patients = params.getJSONArray("patients");
+			if (patients!=null&&patients.length()>0) {
+				List<Integer> ids = new ArrayList<>();
+				for(int index=0; index<patients.length(); index++){
+					int id = patients.getJSONObject(index).getInt("patient_id");
+					ids.add(id);
+				}
+				Map<String, Object> map = new HashMap<>();
+				map.put("doctor_id", doctor_id);
+				map.put("ids", ids);
+				System.out.println("patient_ids:"+ids.toString());
+				List<Patient> list = patientMapper.getPatientListByDoctorId2(doctor_id, ids);
+				JSONArray jsonArray = new JSONArray();
+				if (list!=null&&!list.isEmpty()) {
+					Iterator<Patient> iterator = list.iterator();
+					while(iterator.hasNext()){
+						Patient patient = iterator.next();
+						JSONObject jsonObject = new JSONObject(patient);
+						jsonObject.remove("password");
+						jsonObject.remove("doctor");
+						jsonObject.put("doctor_id", doctor_id);
+						jsonArray.put(jsonObject);
+					}
+				}
+				System.out.println("patient_List:"+jsonArray.toString());
+				writer.write(jsonArray.toString());
+			} else{
+				List<Patient> list = patientMapper.getPatientListByDoctorId(doctor_id);
+				JSONArray jsonArray = new JSONArray();
+				if (list!=null&&!list.isEmpty()) {
+					Iterator<Patient> iterator = list.iterator();
+					while(iterator.hasNext()){
+						Patient patient = iterator.next();
+						JSONObject jsonObject = new JSONObject(patient);
+						jsonObject.remove("password");
+						jsonObject.remove("doctor");
+						jsonObject.put("doctor_id", doctor_id);
+						jsonArray.put(jsonObject);
+					}
+				}
+				System.out.println("patient_List:"+jsonArray.toString());
+				writer.write(jsonArray.toString());
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

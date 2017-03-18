@@ -24,6 +24,17 @@
     	update patient set doctor_id=#{arg0} where id=#{arg1}
     </update>
     
+    <select id="getPatientListByDoctorId" parameterType="int" resultMap="patientResult">
+    	select * from patient where doctor_id=#{doctor_id}
+    </select>
+    
+    <select id="getPatientListByDoctorId2" resultMap="patientResult">
+    	select * from patient where doctor_id=#{doctor_id} and id not in
+    	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+    		#{item}
+    	</foreach>
+    </select>
+    
     <resultMap type="Patient" id="patientResult">
     	<association property="doctor" column="doctor_id" javaType="Doctor" select="getDoctorById"/>
     </resultMap>
