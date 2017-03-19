@@ -34,7 +34,7 @@
     	<association property="doctor" column="doctor_id" javaType="Doctor" select="getDoctorById"/>
     </resultMap>
     <select id="getPatientById" parameterType="int" resultMap="patientResult">
-    	select * from Patient where id=#{id}
+    	select * from patient where id=#{id}
     </select>
     <select id="getDoctorById" parameterType="int" resultType="Doctor">
     	select * from doctor where id=#{id}
