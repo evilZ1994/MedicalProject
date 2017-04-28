@@ -66,21 +66,21 @@ public class DoctorServiceImp implements DoctorService {
 	}
 
 	@Override
-	public JSONObject doctorLogin(JSONObject content) {
+	public JSONObject doctorLogin(String username, String password) {
 		try {
-			String username = content.getString("username");
-			String password = content.getString("password");
 			Doctor doctor = getByUsernameAndPass(username, password);
 			if (doctor != null) {
 				JSONObject jsonObject = new JSONObject(doctor);
 				JSONObject result = new JSONObject();
-				result.put("status", "Success");
-				result.put("content", jsonObject);
+				result.put("status", "success");
+				result.put("user", jsonObject);
+				result.put("error", "");
 				return result;
 			} else {
 				JSONObject result = new JSONObject();
-				result.put("status", "Fail");
-				result.put("Error", "用户名或密码错误！");
+				result.put("status", "fail");
+				result.put("user", "");
+				result.put("error", "用户名或密码错误！");
 				return result;
 			}
 		} catch (JSONException e) {

@@ -27,5 +27,5 @@ public interface DoctorService {
 	/**
 	 * 医生登录
 	 */
-	public JSONObject doctorLogin(JSONObject content);
+	public JSONObject doctorLogin(String username, String password);
 }

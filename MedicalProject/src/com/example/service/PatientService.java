@@ -26,7 +26,7 @@ public interface PatientService {
 	/**
 	 * 患者登录
 	 */
-	public JSONObject patientLogin(JSONObject content);
+	public JSONObject patientLogin(String username, String password);
 
 	/**
 	 * 添加医生

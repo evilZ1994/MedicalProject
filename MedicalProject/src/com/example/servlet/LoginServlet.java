@@ -41,32 +41,26 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));
-		StringBuffer buffer = new StringBuffer();
-		String line;
-		while((line=reader.readLine())!=null){
-			buffer.append(line);
-		}
-		reader.close();
+		
 		PrintWriter writer = response.getWriter();
-		String infoStr = buffer.toString();
+		String type = request.getParameter("type");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		try {
-			JSONObject info = new JSONObject(infoStr);
-			if (info.getString("type").equals("patient")) {
-				JSONObject content = info.getJSONObject("content");
-				JSONObject result = patientService.patientLogin(content);
+			if (type.equals("patient")) {
+				//JSONObject content = info.getJSONObject("content");
+				JSONObject result = patientService.patientLogin(username, password);
 				if (result!=null) {
 					writer.write(result.toString());
 				}else {
-					writer.write(result.put("status", "Fail").put("Error", "登录失败，请稍后重试").toString());
+					writer.write(result.put("status", "fail").put("user", "").put("error", "登录失败，请稍后重试").toString());
 				}
-			} else if (info.getString("type").equals("doctor")){
-				JSONObject content = info.getJSONObject("content");
-				JSONObject result = doctorService.doctorLogin(content);
+			} else if (type.equals("doctor")){
+				JSONObject result = doctorService.doctorLogin(username, password);
 				if (result!=null) {
 					writer.write(result.toString());
 				}else {
-					writer.write(result.put("status", "Fail").put("Error", "登录失败，请稍后重试").toString());
+					writer.write(result.put("status", "fail").put("user", "").put("error", "登录失败，请稍后重试").toString());
 				}
 			}
 			

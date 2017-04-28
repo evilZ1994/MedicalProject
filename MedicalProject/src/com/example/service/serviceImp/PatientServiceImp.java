@@ -2,6 +2,7 @@ package com.example.service.serviceImp;
 
 import java.util.Date;
 
+import org.apache.ibatis.jdbc.Null;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,21 +67,21 @@ public class PatientServiceImp implements PatientService {
 	}
 
 	@Override
-	public JSONObject patientLogin(JSONObject content) {
+	public JSONObject patientLogin(String username, String password) {
 		try {
-			String username = content.getString("username");
-			String password = content.getString("password");
 			Patient patient = getByUsernameAndPass(username, password);
 			if (patient != null) {
 				JSONObject jsonObject = new JSONObject(patient);
 				JSONObject result = new JSONObject();
-				result.put("status", "Success");
-				result.put("content", jsonObject);
+				result.put("status", "success");
+				result.put("user", jsonObject);
+				result.put("error", "");
 				return result;
 			} else {
 				JSONObject result = new JSONObject();
-				result.put("status", "Fail");
-				result.put("Error", "用户名或密码错误！");
+				result.put("status", "fail");
+				result.put("user", "");
+				result.put("error", "用户名或密码错误！");
 				return result;
 			}
 		} catch (JSONException e) {
