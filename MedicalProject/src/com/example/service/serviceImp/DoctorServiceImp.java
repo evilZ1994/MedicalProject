@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.bean.Doctor;
 import com.example.mapper.DoctorMapper;
 import com.example.service.DoctorService;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Service
 public class DoctorServiceImp implements DoctorService {
@@ -48,13 +49,13 @@ public class DoctorServiceImp implements DoctorService {
 			
 			boolean registerSuccess = (doctor2!=null);
 			if (registerSuccess) {
-				resultJson.put("Success", "注册成功！");
+				resultJson.put("status", "success").put("message", "注册成功！").put("user", new JSONObject().put("username", username).put("password", password));
 			} else {
-				resultJson.put("Error", "注册失败，请稍后再试！");
+				resultJson.put("status", "fail").put("message", "注册失败，请稍后再试！").put("user", "");
 			}
 			return resultJson;
 		} else {
-			resultJson.put("Error", "用户名已存在！");
+			resultJson.put("status", "fail").put("message", "用户名已存在！").put("user", "");
 			return resultJson;
 		}
 	}
@@ -74,13 +75,13 @@ public class DoctorServiceImp implements DoctorService {
 				JSONObject result = new JSONObject();
 				result.put("status", "success");
 				result.put("user", jsonObject);
-				result.put("error", "");
+				result.put("message", "");
 				return result;
 			} else {
 				JSONObject result = new JSONObject();
 				result.put("status", "fail");
 				result.put("user", "");
-				result.put("error", "用户名或密码错误！");
+				result.put("message", "用户名或密码错误！");
 				return result;
 			}
 		} catch (JSONException e) {

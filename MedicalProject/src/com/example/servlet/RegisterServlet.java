@@ -47,34 +47,21 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));
-		StringBuffer buffer = new StringBuffer();
-		String line;
-		while((line=reader.readLine())!=null){
-			buffer.append(line);
-		}
-		reader.close();
-		
-		String infoStr = buffer.toString();
-		System.out.println("info:"+infoStr);
-		PrintWriter writer = response.getWriter();
+		String type = request.getParameter("type");
 		//返回结果
+		PrintWriter writer = response.getWriter();
 		JSONObject resultJson = new JSONObject();
 		try {
-			if (infoStr!=null) {
-				JSONObject info = new JSONObject(infoStr);
-				String type = info.getString("type");
-				//判断是医生还是患者注册
-				if (type.equals("patient")) {
-					resultJson = patientService.patientRegister(info.getJSONObject("content"));
-					writer.write(resultJson.toString());
-				} else if (type.equals("doctor")) {
-					resultJson = doctorService.doctorRegister(info.getJSONObject("content"));
-					writer.write(resultJson.toString());
-				}
+			//判断是医生还是患者注册
+			if (type.equals("patient")) {
+				resultJson = patientService.patientRegister(new JSONObject(request.getParameter("user")));
+				System.out.println(resultJson.toString());
+				writer.write(resultJson.toString());
+			} else if (type.equals("doctor")) {
+				resultJson = doctorService.doctorRegister(new JSONObject(request.getParameter("user")));
+				writer.write(resultJson.toString());
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

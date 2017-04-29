@@ -53,14 +53,14 @@ public class LoginServlet extends HttpServlet {
 				if (result!=null) {
 					writer.write(result.toString());
 				}else {
-					writer.write(result.put("status", "fail").put("user", "").put("error", "登录失败，请稍后重试").toString());
+					writer.write(result.put("status", "fail").put("user", "").put("message", "登录失败，请稍后重试").toString());
 				}
 			} else if (type.equals("doctor")){
 				JSONObject result = doctorService.doctorLogin(username, password);
 				if (result!=null) {
 					writer.write(result.toString());
 				}else {
-					writer.write(result.put("status", "fail").put("user", "").put("error", "登录失败，请稍后重试").toString());
+					writer.write(result.put("status", "fail").put("user", "").put("message", "登录失败，请稍后重试").toString());
 				}
 			}
 			
