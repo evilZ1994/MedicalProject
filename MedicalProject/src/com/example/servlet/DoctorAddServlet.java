@@ -1,8 +1,6 @@
 package com.example.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletContext;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -19,55 +16,51 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.example.service.DoctorService;
 import com.example.service.PatientService;
 
-
-public class LoginServlet extends HttpServlet {
+/**
+ * Servlet implementation class DoctorAddServlet
+ */
+public class DoctorAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private PatientService patientService = null;
-	private DoctorService doctorService = null;
+    private DoctorService doctorService;
+    private PatientService patientService;
 
-	@Override
+    @Override
 	public void init() throws ServletException {
 		ServletContext servletContext = this.getServletContext();
 		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-		patientService = webApplicationContext.getBean(PatientService.class);
 		doctorService = webApplicationContext.getBean(DoctorService.class);
-	}   
+		patientService = webApplicationContext.getBean(PatientService.class);
+	}
 
-    public LoginServlet() {
+	public DoctorAddServlet() {
         super();
     }
 
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		
-		PrintWriter writer = response.getWriter();
 		String type = request.getParameter("type");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		try {
-			if (type.equals("patient")) {
-				//JSONObject content = info.getJSONObject("content");
-				JSONObject result = patientService.patientLogin(username, password);
-				if (result!=null) {
-					writer.write(result.toString());
-				}else {
-					writer.write(result.put("status", "fail").put("user", "").put("message", "登录失败，请稍后重试").toString());
-				}
-				System.out.println("PatientLogin:"+result.toString());
-			} else if (type.equals("doctor")){
-				JSONObject result = doctorService.doctorLogin(username, password);
-				if (result!=null) {
-					writer.write(result.toString());
-				}else {
-					writer.write(result.put("status", "fail").put("user", "").put("message", "登录失败，请稍后重试").toString());
-				}
-			}
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
+		PrintWriter writer = response.getWriter();
+		JSONObject result = new JSONObject();
+		switch (type) {
+		case "search":
+			String doctorUsername = request.getParameter("username");
+			result  = doctorService.searchDoctor(doctorUsername);
+			writer.write(result.toString());
+			break;
+		case "add":
+			int id = Integer.valueOf(request.getParameter("id"));
+			int doctor_id = Integer.valueOf(request.getParameter("doctor_id"));
+			result = patientService.addDoctor(doctor_id, id);
+			writer.write(result.toString());
+			break;
+		default:
+			break;
 		}
+		System.out.println(result.toString());
 	}
 
 

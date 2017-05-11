@@ -56,4 +56,33 @@
     <servlet-name>FeedbackSendServlet</servlet-name>
     <url-pattern>/FeedbackSendServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DoctorAddServlet</display-name>
+    <servlet-name>DoctorAddServlet</servlet-name>
+    <servlet-class>com.example.servlet.DoctorAddServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DoctorAddServlet</servlet-name>
+    <url-pattern>/DoctorAddServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <display-name>DataUploadServlet</display-name>
+    <servlet-name>DataUploadServlet</servlet-name>
+    <servlet-class>com.example.servlet.DataUploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DataUploadServlet</servlet-name>
+    <url-pattern>/DataUploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetUserInfoServlet</display-name>
+    <servlet-name>GetUserInfoServlet</servlet-name>
+    <servlet-class>com.example.servlet.GetUserInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetUserInfoServlet</servlet-name>
+    <url-pattern>/GetUserInfoServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

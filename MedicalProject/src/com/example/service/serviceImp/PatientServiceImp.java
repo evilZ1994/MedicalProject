@@ -1,3 +1,4 @@
+
 package com.example.service.serviceImp;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.bean.Doctor;
 import com.example.bean.Patient;
+import com.example.mapper.DoctorMapper;
 import com.example.mapper.PatientMapper;
 import com.example.service.PatientService;
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -18,18 +20,34 @@ public class PatientServiceImp implements PatientService {
 
 	@Autowired
 	private PatientMapper patientMapper;
+	@Autowired
+	private DoctorMapper doctorMapper;
+	
+	@Override
+	public Patient getPatientById(int id) {
+		Patient patient = patientMapper.selectPatientById(id);
+		return patient;
+	}
 
 	@Override
 	public Patient getPatientByUsername(String username) {
 		Patient patient = patientMapper.selectPatientByUsername(username);
 		return patient;
 	}
+	
+	@Override
+	public Doctor getDoctorByUsername(String username) {
+		Doctor doctor = doctorMapper.selectDoctorByUsername(username);
+		return doctor;
+	}
 
 	public JSONObject patientRegister(JSONObject content) throws JSONException {
 		JSONObject resultJson = new JSONObject();
 		String username = content.getString("username");
 		Patient checkPat = getPatientByUsername(username);
-		if (checkPat==null) {
+		Doctor checkDoc = getDoctorByUsername(username);
+		//同时保证患者与医生用户名唯一
+		if (checkPat==null && checkDoc==null) {
 			String name = content.getString("name");
 			String password = content.getString("password");
 			Date create_time = new Date();
@@ -49,11 +67,11 @@ public class PatientServiceImp implements PatientService {
 			if (registerSuccess) {
 				resultJson.put("status", "success").put("message", "注册成功！").put("user", new JSONObject().put("username", username).put("password", password));
 			} else {
-				resultJson.put("status", "fail").put("message", "注册失败！").put("user", new JSONObject());
+				resultJson.put("status", "fail").put("message", "注册失败了，稍后再试一下吧！").put("user", new JSONObject());
 			}
 			return resultJson;
 		} else {
-			resultJson.put("status", "fail").put("message", "用户名已存在！").put("user", new JSONObject());
+			resultJson.put("status", "fail").put("message", "用户名已存在，换一个试试吧！").put("user", new JSONObject());
 			return resultJson;
 		}
 	}
@@ -69,16 +87,29 @@ public class PatientServiceImp implements PatientService {
 		try {
 			Patient patient = getByUsernameAndPass(username, password);
 			if (patient != null) {
-				JSONObject jsonObject = new JSONObject(patient);
+				JSONObject patientObject = new JSONObject();
 				JSONObject result = new JSONObject();
 				result.put("status", "success");
-				result.put("user", jsonObject);
+				patientObject.put("id", patient.getId())
+						.put("username", patient.getUsername())
+						.put("password", patient.getPassword())
+						.put("name", patient.getName());
+				if (patient.getDoctor() != null) {
+					patientObject.put("doctor_id", patient.getDoctor().getId());
+					patientObject.put("doctor_username", patient.getDoctor().getUsername());
+					patientObject.put("doctor_name", patient.getDoctor().getName());
+				} else{
+					patientObject.put("doctor_id", 0);
+					patientObject.put("doctor_username", "");
+					patientObject.put("doctor_name", "");
+				}
+				result.put("user", patientObject);
 				result.put("message", "");
 				return result;
 			} else {
 				JSONObject result = new JSONObject();
 				result.put("status", "fail");
-				result.put("user", "");
+				result.put("user", new JSONObject());
 				result.put("message", "用户名或密码错误！");
 				return result;
 			}
@@ -90,14 +121,24 @@ public class PatientServiceImp implements PatientService {
 	}
 
 	@Override
-	public boolean addDoctor(int doctorId, int patientId) {
+	public JSONObject addDoctor(int doctorId, int patientId) {
 		patientMapper.addDoctor(doctorId, patientId);
 		Patient patient = patientMapper.selectPatientById(patientId);
 		Doctor doctor = patient.getDoctor();
-		if (doctor!=null) {
-			return true;
+		try {
+			if (doctor.getId() == doctorId) {
+				JSONObject result = new JSONObject();
+				result.put("status", "success").put("doctor_id", doctor.getId()).put("doctor_name", doctor.getName()).put("doctor_username", doctor.getUsername());
+				return result;
+			} else {
+				JSONObject result = new JSONObject();
+				result.put("status", "fail").put("doctor_id", "").put("doctor_name", "").put("doctor_username", "");
+				return result;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return null;
 	}
 
 }

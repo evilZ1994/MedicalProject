@@ -71,7 +71,7 @@ public class UtilGetServiceImp implements UtilGetService {
 		}
 	}
 
-	@Override
+	/*@Override
 	public void addDoctor(JSONObject params, JSONObject result, PatientService patientService, PrintWriter writer) {
 		try {
 			int patientId = params.getInt("patientId");
@@ -99,7 +99,7 @@ public class UtilGetServiceImp implements UtilGetService {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	@Override
 	public void getFeedback(JSONObject params, JSONObject result, PrintWriter writer) {

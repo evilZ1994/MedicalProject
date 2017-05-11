@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.bean.Doctor;
+import com.example.bean.Patient;
 import com.example.mapper.DoctorMapper;
+import com.example.mapper.PatientMapper;
 import com.example.service.DoctorService;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
@@ -17,11 +19,25 @@ public class DoctorServiceImp implements DoctorService {
 	
 	@Autowired
 	private DoctorMapper doctorMapper;
+	@Autowired
+	private PatientMapper patientMapper;
 
+	@Override
+	public Doctor getDoctorById(int id) {
+		Doctor doctor = doctorMapper.selectDoctorById(id);
+		return doctor;
+	}
+	
 	@Override
 	public Doctor getDoctorByUsername(String username) {
 		Doctor doctor = doctorMapper.selectDoctorByUsername(username);
 		return doctor;
+	}
+	
+	@Override
+	public Patient getPatientByUsername(String username) {
+		Patient patient = patientMapper.selectPatientByUsername(username);
+		return patient;
 	}
 
 	@Override
@@ -29,7 +45,9 @@ public class DoctorServiceImp implements DoctorService {
 		JSONObject resultJson = new JSONObject();
 		String username = content.getString("username");
 		Doctor checkDoc = getDoctorByUsername(username);
-		if (checkDoc==null) {
+		Patient checkPat = getPatientByUsername(username);
+		//同时保证医生与患者的用户名唯一
+		if (checkDoc==null && checkPat==null) {
 			String name = content.getString("name");
 			String password = content.getString("password");
 			String hospital = content.getString("hospital");
@@ -51,11 +69,11 @@ public class DoctorServiceImp implements DoctorService {
 			if (registerSuccess) {
 				resultJson.put("status", "success").put("message", "注册成功！").put("user", new JSONObject().put("username", username).put("password", password));
 			} else {
-				resultJson.put("status", "fail").put("message", "注册失败，请稍后再试！").put("user", "");
+				resultJson.put("status", "fail").put("message", "注册失败了，稍后再试一下吧！").put("user", new JSONObject());
 			}
 			return resultJson;
 		} else {
-			resultJson.put("status", "fail").put("message", "用户名已存在！").put("user", "");
+			resultJson.put("status", "fail").put("message", "用户名已存在，换一个试试吧！").put("user", new JSONObject());
 			return resultJson;
 		}
 	}
@@ -80,7 +98,7 @@ public class DoctorServiceImp implements DoctorService {
 			} else {
 				JSONObject result = new JSONObject();
 				result.put("status", "fail");
-				result.put("user", "");
+				result.put("user", new JSONObject());
 				result.put("message", "用户名或密码错误！");
 				return result;
 			}
@@ -88,6 +106,31 @@ public class DoctorServiceImp implements DoctorService {
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
+
+	/**
+	 * 查找医生，返回id、用户名、姓名、医院组成的Json
+	 */
+	@Override
+	public JSONObject searchDoctor(String username) {
+		Doctor doctor = getDoctorByUsername(username);
+		JSONObject result = new JSONObject();
+		try {
+			if (doctor != null) {
+				//查找到医生存在
+				result.put("status", "success");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("id", doctor.getId()).put("username", doctor.getUsername()).put("name", doctor.getName()).put("hospital", doctor.getHospital());
+				result.put("doctor", jsonObject);
+				return result;
+			} else {
+				result.put("status", "fail");
+				result.put("doctor", new JSONObject());
+				return result;
+			}			
+		} catch (Exception e) {
+		}
 		return null;
 	}
 

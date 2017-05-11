@@ -38,19 +38,15 @@ public class DataUploadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));
-		StringBuffer buffer = new StringBuffer();
-		String line;
-		while((line=reader.readLine())!=null){
-			buffer.append(line);
-		}
-		reader.close();
+		System.out.println("DataUpload:");
+		String data = request.getParameter("data");
+		System.out.println("data: "+data);
 		PrintWriter writer = response.getWriter();
 		try {
-			JSONArray jsonArray = new JSONArray(buffer.toString());
-			boolean isSuccess = dataService.insertBatchData(jsonArray);
+			JSONArray dataArray = new JSONArray(data);
+			boolean isSuccess = dataService.insertBatchData(dataArray);
 			JSONObject result = new JSONObject();
-			result.put("result", isSuccess?"Success":"Fail");
+			result.put("status", isSuccess?"success":"fail");
 			writer.write(result.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();

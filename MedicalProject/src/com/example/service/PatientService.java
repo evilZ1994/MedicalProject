@@ -3,14 +3,24 @@ package com.example.service;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.bean.Doctor;
 import com.example.bean.Patient;
 
 public interface PatientService {
+	/**
+	 * 根据用户id查找用户
+	 */
+	public Patient getPatientById(int id);
 	
 	/**
 	 * 根据用户名检查用户是否存在
 	 */
 	public Patient getPatientByUsername(String username);
+	
+	/**
+	 * 保证JMessage上用户名唯一性，患者和医生用户都唯一
+	 */
+	public Doctor getDoctorByUsername(String username);
 	
 	/**
 	 * 通过用户名和密码查找用户
@@ -31,5 +41,5 @@ public interface PatientService {
 	/**
 	 * 添加医生
 	 */
-	public boolean addDoctor(int doctorId, int patientId);
+	public JSONObject addDoctor(int doctorId, int patientId);
 }

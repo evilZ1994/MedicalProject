@@ -64,9 +64,9 @@ public class UtilGetServlet extends HttpServlet {
 				utilGetService.searchDoctor(params, result, doctorService, writer);
 				System.out.println("UtilGetServlet done.");
 				break;
-			case "addDoctor":
+			/*case "addDoctor":
 				utilGetService.addDoctor(params, result, patientService, writer);
-				break;
+				break;*/
 			case "getFeedback":
 				utilGetService.getFeedback(params, result, writer);
 				break;
