@@ -8,7 +8,7 @@ public interface DoctorMapper {
 	
 	Doctor selectDoctorByUsername(String username);
 	
-	void addDoctor(Doctor doctor);
+	void insertDoctor(Doctor doctor);
 
 	Doctor selectByUsernameAndPass(Doctor doctor);
 }

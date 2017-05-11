@@ -51,6 +51,7 @@ public class DoctorServiceImp implements DoctorService {
 			String name = content.getString("name");
 			String password = content.getString("password");
 			String hospital = content.getString("hospital");
+			String department = content.getString("department");
 			Date create_time = new Date();
 			Date update_time = new Date();
 			Doctor doctor = new Doctor();
@@ -58,10 +59,11 @@ public class DoctorServiceImp implements DoctorService {
 			doctor.setName(name);
 			doctor.setPassword(password);
 			doctor.setHospital(hospital);
+			doctor.setDepartment(department);
 			doctor.setCreate_time(create_time);
 			doctor.setUpdate_time(update_time);
 			
-			doctorMapper.addDoctor(doctor);
+			doctorMapper.insertDoctor(doctor);
 			//检查注册是否成功
 			Doctor doctor2 = getDoctorByUsername(doctor.getUsername());
 			

@@ -16,8 +16,8 @@
 		select * from doctor where username=#{username} and password=#{password}
 	</select>
 	
-	<insert id="addDoctor" parameterType="Doctor">
-		insert into doctor(name, username, password, hospital, create_time, update_time) values (#{name}, #{username}, #{password}, #{hospital}, #{create_time}, #{update_time})
+	<insert id="insertDoctor" parameterType="Doctor">
+		insert into doctor(name, username, password, hospital, department, create_time, update_time) values (#{name}, #{username}, #{password}, #{hospital}, #{department}, #{create_time}, #{update_time})
 	</insert>
     
 </mapper>
