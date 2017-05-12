@@ -38,13 +38,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>DataServlet</display-name>
-    <servlet-name>DataServlet</servlet-name>
-    <servlet-class>com.example.servlet.DataServlet</servlet-class>
+    <display-name>DataDownloadServlet</display-name>
+    <servlet-name>DataDownloadServlet</servlet-name>
+    <servlet-class>com.example.servlet.DataDownloadServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>DataServlet</servlet-name>
-    <url-pattern>/DataServlet</url-pattern>
+    <servlet-name>DataDownloadServlet</servlet-name>
+    <url-pattern>/DataDownloadServlet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

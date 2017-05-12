@@ -29,5 +29,9 @@
 			#{item}
 		</foreach>
 	</update>
+	
+	<select id="get12Data" parameterType="int" resultType="Data">
+		select * from data where patient_id=${patient_id} order by id desc limit 12
+	</select>
     
 </mapper>

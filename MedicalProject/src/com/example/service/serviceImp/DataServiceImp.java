@@ -98,4 +98,23 @@ public class DataServiceImp implements DataService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public JSONObject getDataByPatientId(int patient_id) {
+		List<Data> list = dataMapper.get12Data(patient_id);
+		JSONObject result = new JSONObject();
+		if(list!=null && list.size()>0){
+			JSONArray jsonArray = new JSONArray();
+			for (Data data : list) {
+				JSONObject jsonObject = new JSONObject(data);
+				jsonArray.put(jsonObject);
+			}
+			try {
+				result.put("data", jsonArray);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }
