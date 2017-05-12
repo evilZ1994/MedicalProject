@@ -1,5 +1,6 @@
 package com.example.service;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,4 +43,9 @@ public interface DoctorService {
 	 * 查找医生
 	 */
 	public JSONObject searchDoctor(String username);
+	
+	/**
+	 * 获取患者列表
+	 */
+	public JSONObject getPatientList(int doctor_id);
 }

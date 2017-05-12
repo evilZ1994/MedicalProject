@@ -36,7 +36,6 @@ public class DataServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doGet");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter writer = response.getWriter();
