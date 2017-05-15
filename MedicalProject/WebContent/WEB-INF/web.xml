@@ -95,4 +95,14 @@
     <servlet-name>GetPatientListServlet</servlet-name>
     <url-pattern>/GetPatientListServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetDataDetailServlet</display-name>
+    <servlet-name>GetDataDetailServlet</servlet-name>
+    <servlet-class>com.example.servlet.GetDataDetailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetDataDetailServlet</servlet-name>
+    <url-pattern>/GetDataDetailServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

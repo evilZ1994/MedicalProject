@@ -19,4 +19,10 @@ public interface DataService {
 	 * @return
 	 */
 	public JSONObject getDataByPatientId(int id);
+	
+	/**
+	 * 返回具体某项数据，限制100条
+	 * @return
+	 */
+	public JSONObject getDetailData(int id, String tag);
 }

@@ -19,4 +19,5 @@ public interface DataMapper {
 	
 	List<Data> get12Data(@Param(value="patient_id") int patient_id);
 	
+	List<Data> get100Data(@Param(value="patient_id") int patient_id);
 }

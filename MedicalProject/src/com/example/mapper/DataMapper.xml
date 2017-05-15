@@ -34,4 +34,7 @@
 		select * from data where patient_id=${patient_id} order by id desc limit 12
 	</select>
     
+    <select id="get100Data" parameterType="int" resultType="Data">
+		select * from data where patient_id=${patient_id} order by id desc limit 100
+	</select>
 </mapper>
