@@ -42,4 +42,9 @@ public interface PatientService {
 	 * 添加医生
 	 */
 	public JSONObject addDoctor(int doctorId, int patientId);
+	
+	/**
+	 * 更新用户信息
+	 */
+	public JSONObject updateInfo(int patientId, String tag, String content);
 }

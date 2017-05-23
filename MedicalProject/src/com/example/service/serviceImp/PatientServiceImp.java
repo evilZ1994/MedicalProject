@@ -141,4 +141,28 @@ public class PatientServiceImp implements PatientService {
 		return null;
 	}
 
+	@Override
+	public JSONObject updateInfo(int patient_id, String tag, String content) {
+		JSONObject jsonObject = new JSONObject();
+		switch (tag) {
+		case "name":
+			patientMapper.updateName(patient_id, content);
+			break;
+		case "age":
+			patientMapper.updateAge(patient_id, Integer.valueOf(content));
+			break;
+		case "sex":
+			patientMapper.updateSex(patient_id, content);
+			break;
+		default:
+			break;
+		}
+		try {
+			jsonObject.put("status", "success").put("content", content);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObject;
+	}
+
 }

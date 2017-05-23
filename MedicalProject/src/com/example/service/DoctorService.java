@@ -48,4 +48,9 @@ public interface DoctorService {
 	 * 获取患者列表
 	 */
 	public JSONObject getPatientList(int doctor_id);
+	
+	/**
+	 * 更新用户信息
+	 */
+	public JSONObject updateInfo(int doctor_id, String tag, String content);
 }

@@ -105,4 +105,14 @@
     <servlet-name>GetDataDetailServlet</servlet-name>
     <url-pattern>/GetDataDetailServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InfoChangeServlet</display-name>
+    <servlet-name>InfoChangeServlet</servlet-name>
+    <servlet-class>com.example.servlet.InfoChangeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InfoChangeServlet</servlet-name>
+    <url-pattern>/InfoChangeServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

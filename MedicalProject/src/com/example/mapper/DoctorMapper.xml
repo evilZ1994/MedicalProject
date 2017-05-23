@@ -19,5 +19,21 @@
 	<insert id="insertDoctor" parameterType="Doctor">
 		insert into doctor(name, username, password, hospital, department, create_time, update_time) values (#{name}, #{username}, #{password}, #{hospital}, #{department}, #{create_time}, #{update_time})
 	</insert>
+	
+	<update id="updateName">
+		update doctor set name=#{name} where id=#{id}
+	</update>
+	
+	<update id="updateSex">
+		update doctor set sex=#{sex} where id=#{id}
+	</update>
+	
+	<update id="updateHospital">
+		update doctor set hospital=#{hospital} where id=#{id}
+	</update>
+	
+	<update id="updateDepartment">
+		update doctor set department=#{department} where id=#{id}
+	</update>
     
 </mapper>

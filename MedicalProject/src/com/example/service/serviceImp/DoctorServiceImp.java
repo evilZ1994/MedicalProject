@@ -165,4 +165,31 @@ public class DoctorServiceImp implements DoctorService {
 		return resultObject;
 	}
 
+	@Override
+	public JSONObject updateInfo(int doctor_id, String tag, String content) {
+		JSONObject jsonObject = new JSONObject();
+		switch (tag) {
+		case "name":
+			doctorMapper.updateName(doctor_id, content);
+			break;
+		case "sex":
+			doctorMapper.updateSex(doctor_id, content);
+			break;
+		case "hospital":
+			doctorMapper.updateHospital(doctor_id, content);
+			break;
+		case "department":
+			doctorMapper.updateDepartment(doctor_id, content);
+			break;
+		default:
+			break;
+		}
+		try {
+			jsonObject.put("status", "success").put("content", content);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObject;
+	}
+
 }

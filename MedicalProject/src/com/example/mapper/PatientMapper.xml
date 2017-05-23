@@ -41,4 +41,16 @@
     <select id="getDoctorById" parameterType="int" resultType="Doctor">
     	select * from doctor where id=#{id}
     </select>
+    
+    <update id="updateName">
+    	update patient set name=#{name} where id=#{id}
+    </update>
+    
+    <update id="updateAge">
+    	update patient set age=#{age} where id=#{id}
+    </update>
+    
+    <update id="updateSex">
+    	update patient set sex=#{sex} where id=#{id}
+    </update>
 </mapper>
