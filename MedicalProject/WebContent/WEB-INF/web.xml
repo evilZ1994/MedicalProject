@@ -115,4 +115,14 @@
     <servlet-name>InfoChangeServlet</servlet-name>
     <url-pattern>/InfoChangeServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PassChangeServlet</display-name>
+    <servlet-name>PassChangeServlet</servlet-name>
+    <servlet-class>com.example.servlet.PassChangeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PassChangeServlet</servlet-name>
+    <url-pattern>/PassChangeServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

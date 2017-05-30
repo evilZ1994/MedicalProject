@@ -1,9 +1,6 @@
 package com.example.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -20,20 +16,21 @@ import com.example.service.DoctorService;
 import com.example.service.PatientService;
 
 
-public class LoginServlet extends HttpServlet {
+public class PassChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PatientService patientService = null;
 	private DoctorService doctorService = null;
 
 	@Override
 	public void init() throws ServletException {
-		ServletContext servletContext = this.getServletContext();
+		super.init();
+		ServletContext servletContext = getServletContext();
 		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
 		patientService = webApplicationContext.getBean(PatientService.class);
 		doctorService = webApplicationContext.getBean(DoctorService.class);
-	}   
+	}
 
-    public LoginServlet() {
+    public PassChangeServlet() {
         super();
     }
 
@@ -42,33 +39,24 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		
-		PrintWriter writer = response.getWriter();
 		String type = request.getParameter("type");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		try {
-			if (type.equals("patient")) {
-				//JSONObject content = info.getJSONObject("content");
-				JSONObject result = patientService.patientLogin(username, password);
-				if (result!=null) {
-					writer.write(result.toString());
-				}else {
-					writer.write(result.put("status", "fail").put("user", "").put("message", "登录失败，请稍后重试").toString());
-				}
-			} else if (type.equals("doctor")){
-				JSONObject result = doctorService.doctorLogin(username, password);
-				if (result!=null) {
-					writer.write(result.toString());
-				}else {
-					writer.write(result.put("status", "fail").put("user", "").put("message", "登录失败，请稍后重试").toString());
-				}
-			}
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
+		int id = Integer.valueOf(request.getParameter("id"));
+		String oldPass = request.getParameter("old_pass");
+		String newPass = request.getParameter("new_pass");
+		
+		switch (type) {
+		case "patient":
+			JSONObject result = patientService.updatePassword(id, oldPass, newPass);
+			response.getWriter().write(result.toString());
+			break;
+		case "doctor":
+			JSONObject result2 = doctorService.updatePassword(id, oldPass, newPass);
+			response.getWriter().write(result2.toString());
+			break;
+		default:
+			break;
 		}
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

@@ -53,4 +53,9 @@ public interface DoctorService {
 	 * 更新用户信息
 	 */
 	public JSONObject updateInfo(int doctor_id, String tag, String content);
+	
+	/**
+	 * 修改密码
+	 */
+	public JSONObject updatePassword(int id, String oldPass, String newPass);
 }

@@ -24,7 +24,7 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/medical_project?useSSL=false" />
 		<property name="username" value="root" />
-		<property name="password" value="z1905" />
+		<property name="password" value="root" />
 	</bean>
 	
 	<!-- 2. mybatis 的SqlSession 的工厂: SqlSessionFactoryBean -->

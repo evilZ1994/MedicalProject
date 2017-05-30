@@ -38,7 +38,6 @@ public class GetPatientListServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		int id = Integer.valueOf(request.getParameter("id"));
 		JSONObject result = doctorService.getPatientList(id);
-		System.out.println(result.toString());
 		response.getWriter().write(result.toString());
 	}
 

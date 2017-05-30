@@ -165,4 +165,30 @@ public class PatientServiceImp implements PatientService {
 		return jsonObject;
 	}
 
+	@Override
+	public JSONObject updatePassword(int id, String oldPass, String newPass) {
+		JSONObject result = new JSONObject();
+		//先检查账户
+		Patient patient = patientMapper.selectByIdAndPass(id, oldPass);
+		try {
+			if (patient != null) {
+				patientMapper.updatePassword(id, newPass);
+				//检查修改是否成功
+				Patient patient2 = patientMapper.selectByIdAndPass(id, newPass);
+				if (patient2 != null) {
+					result.put("status", "success");
+				} else{
+					result.put("status", "fail");
+				}
+				return result;
+			} else{
+				result.put("status", "fail");
+				return result;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

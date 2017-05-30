@@ -16,6 +16,10 @@
 		select * from doctor where username=#{username} and password=#{password}
 	</select>
 	
+	<select id="selectByIdAndPass" resultType="Doctor">
+    	select * from doctor where id=#{id} and password=#{password}
+    </select>
+	
 	<insert id="insertDoctor" parameterType="Doctor">
 		insert into doctor(name, username, password, hospital, department, create_time, update_time) values (#{name}, #{username}, #{password}, #{hospital}, #{department}, #{create_time}, #{update_time})
 	</insert>
@@ -34,6 +38,10 @@
 	
 	<update id="updateDepartment">
 		update doctor set department=#{department} where id=#{id}
+	</update>
+	
+	<update id="updatePassword">
+		update doctor set password=#{password} where id=#{id}
 	</update>
     
 </mapper>

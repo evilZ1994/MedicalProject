@@ -15,6 +15,8 @@ public interface PatientMapper {
 	
 	Patient selectByUsernameAndPass(Patient patient);
 	
+	Patient selectByIdAndPass(@Param("id")int id, @Param("password")String password);
+	
 	void addPatient(Patient patient);
 
 	void addDoctor(int doctor_id, int patient_id);
@@ -28,4 +30,6 @@ public interface PatientMapper {
 	void updateAge(@Param("id")int patient_id, @Param("age")int age);
 	
 	void updateSex(@Param("id")int patient_id, @Param("sex")String sex);
+	
+	void updatePassword(@Param("id")int patient_id, @Param("password")String password);
 }

@@ -16,6 +16,10 @@
     	select * from patient where username=#{username} and password=#{password}
     </select>
     
+    <select id="selectByIdAndPass" resultType="Patient">
+    	select * from patient where id=#{id} and password=#{password}
+    </select>
+    
     <insert id="addPatient" parameterType="Patient" useGeneratedKeys="true" keyProperty="id">
     	insert into patient(name, username, password, create_time, update_time) values (#{name}, #{username}, #{password}, #{create_time}, #{update_time})
     </insert>
@@ -52,5 +56,9 @@
     
     <update id="updateSex">
     	update patient set sex=#{sex} where id=#{id}
+    </update>
+    
+    <update id="updatePassword">
+    	update patient set password=#{password} where id=#{id}
     </update>
 </mapper>
